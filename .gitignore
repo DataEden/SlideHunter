@@ -3,6 +3,9 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# data folder
+/SlideHunt/data/
+
 # C extensions
 *.so
 

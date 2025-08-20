@@ -1,0 +1,9 @@
+python-dotenv
+pypdf
+chromadb>=0.5.5
+openai>=1.40.0
+numpy
+pandas
+sentence-transformers
+scikit-learn
+tiktoken
