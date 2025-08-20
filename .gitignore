@@ -1,7 +1,7 @@
 
 # This portion of .gitignore is appropriate for pycache, data, etc...
 # data ignores
-/data/
+#/data/
 
 #cached files
 /__pycache__/
