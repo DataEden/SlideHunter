@@ -6,5 +6,6 @@
 #cached files
 /__pycache__/
 
-
+# Environmental variables
+.env
 
