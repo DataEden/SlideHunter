@@ -32,7 +32,7 @@ _Find exactly where a topic was covered in course materials. Fast answers with p
 
 ---
 
-## SlideHunter Team
+## 🙌 The Team
 
 ```bash
 Mina Grullon, Fari Lindo, Thalyann Olivo, Kaifeng Yu, Jahaira Zhagnay
