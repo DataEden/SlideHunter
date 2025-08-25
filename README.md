@@ -1,18 +1,8 @@
 
 # SlideHunter — Lecture Navigator MVP (Multi‑Modal RAG)
 
-_Find exactly where a topic was covered in course materials. Fast answers with precise slide/page citations._
-
 <p align="center">
-  <img src="images\SlideHunter_Logo.png" alt="SlideHunter-App LOGO" width="35%", height="60%">
-  <br/>
-  <em></em>
-</p>
-
----
-
-<p align="center">
-  <img src="images\SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="50%">
+  <img src="images\SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="70%">
   <br/>
   <em>Ingestion → Retrieval (FAISS + BM25) → Routing/Rerank → Streamlit UI with citations</em>
 </p>
