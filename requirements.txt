@@ -1,9 +1,34 @@
-python-dotenv
-pypdf
-chromadb>=0.5.5
-openai>=1.40.0
+# numerical processing and dataframes
 numpy
 pandas
+
+# Dashboard--Demo
+streamlit
+
+# DS libraries 
+sentence-transformers
+faiss-cpu
+rank-bm25
+beautifulsoup4
 sentence-transformers
 scikit-learn
+
+# tokenizer
 tiktoken
+
+# pdf library
+pypdf
+
+#vector-db
+chromadb>=0.5.5
+
+#openai model version specs
+openai>=1.40.0
+
+# For Re-aRnkings
+transformers
+torch
+
+# Environment 
+python-dotenv
+
