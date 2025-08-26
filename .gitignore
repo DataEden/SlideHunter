@@ -4,8 +4,10 @@
 /data/
 
 #cached files
-/__pycache__/
+/notebooks/__pycache__/
 
 # Environmental variables
 .env
 
+# image folder
+/images/
