@@ -1,9 +1,47 @@
+# Imports
+from dotenv import dotenv_values
 import json, os
 from bs4 import BeautifulSoup
 from sentence_transformers import SentenceTransformer
 import numpy as np, faiss, re, json, os
 from canvasapi import Canvas
 import torch
+
+# Load environment variables from .env file
+config = dotenv_values() # load .env file
+
+# Injest and process data from Canvas Sections
+# Set up Canva API client
+CANVAS_BASE_URL = config.get("CANVAS_BASE_URL")
+CANVAS_TOKEN=config.get("CANVAS_TOKEN")
+OPENAI_API_KEY = config.get("OPENAI_API_KEY")
+
+# Initialize Canvas API client 
+canvas = Canvas(CANVAS_BASE_URL, CANVAS_TOKEN)
+
+# Getting the list of courses
+my_courses = canvas.get_courses()
+
+# Pulling courses from Canvas
+my_courses = canvas.get_courses()
+course_list = []
+
+for course in my_courses:
+    print(course.name)
+    course_list.append(course)
+
+# Pulling modules from courses on Canvas 
+modules = course.get_modules()
+
+for module in modules:
+    print(f"  Module_id: {module.id}")
+    print(f"  Module: {module.name}")
+    module_items = module.get_module_items()
+    for item in module_items:
+        print(f" - Item: {item.title} ({item.type})")
+    
+# Embedding Tokenized Canvas modules (Texts/items).
+# Then Turning Those Embddings into a facts list + FAISS index that we can query.
 
 # Multi-course to ONE FAISS store + simple router using career and technical courses
 
