@@ -2,7 +2,7 @@
 # SlideHunter — Lecture Navigator MVP (Multi‑Modal RAG)
 
 <p align="center">
-  <img src="images\SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="70%">
+  <img src="images\SlideHunter_LogoV2.png" alt="SlideHunter-App Flow Diagram", width="70%">
   <br/>
   <em>Ingestion → Retrieval (FAISS + BM25) → Routing/Rerank → Streamlit UI with citations</em>
 </p>
