@@ -3,11 +3,13 @@
 # data ignores
 /data/
 
-#cached files
-/notebooks/__pycache__/
+# cached files
+/__pycache__/
 
 # Environmental variables
 .env
 
 # image folder
 /images/
+
+# 
