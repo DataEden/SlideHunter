@@ -330,7 +330,7 @@ drive.mount('/content/drive')
 # Config: where FAISS files live & where app.py is
 import os, re, time, subprocess, shutil, pathlib
 BASE   = "/content/drive/MyDrive/SlideHunt"   # Base directory
-APPDIR = "/content"                           # SlideHunters.py folder
+APPDIR = "/content"                           # SlideHunter.py folder
 os.environ["SLIDEHUNT_BASE"] = BASE
 
 # Sanity check saved files
