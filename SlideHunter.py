@@ -40,12 +40,12 @@ def get_repo_base() -> Path:
          - this file in app/:       <repo>/app/SlideHunter.py
       4) Walk upward looking for data/faiss
     """
-    # 1) Preferred var
+    # Preferred var
     v = os.getenv("SLIDEHUNTER_BASE")
     if v:
         return _norm(v)
     
-    # 3) Auto-detect
+    # Auto-detect
     here = Path(__file__).resolve()
     root = here.parent
     if (root / "data" / "faiss").exists():
@@ -53,7 +53,7 @@ def get_repo_base() -> Path:
     if root.name.lower() == "app" and (root.parent / "data" / "faiss").exists():
         return root.parent
 
-    # 4) Walk up a few levels
+    # Walk up a few levels
     probe = root
     for _ in range(4):
         if (probe / "data" / "faiss").exists():
