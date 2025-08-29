@@ -44,15 +44,7 @@ def get_repo_base() -> Path:
     v = os.getenv("SLIDEHUNTER_BASE")
     if v:
         return _norm(v)
-
     
-    """
-    # 2) Legacy var
-    v = os.getenv("SLIDEHUNT_BASE")
-    if v:
-        return _norm(v)
-    """
-
     # 3) Auto-detect
     here = Path(__file__).resolve()
     root = here.parent
@@ -143,7 +135,7 @@ def summarize_gpt4o(question, hits, model="gpt-4o-mini", max_context_chars=1400)
     context = _build_context(hits, cap=max_context_chars)
     prompt  = (
         "You are a careful teaching assistant.\n"
-        "Answer the question in 1–2 sentences using ONLY the Context.\n"
+        "Answer the question in 1-2 sentences using ONLY the Context.\n"
         "If the Context is insufficient, say you can't find it in the slides/pages.\n"
         "Add inline citation markers like [1], [2] that refer to the numbered sources.\n\n"
         f"Question: {question}\n\nContext:\n{context}"
@@ -160,7 +152,7 @@ def summarize_local(question, hits, max_context_chars=1400):
     pipe    = _load_local_summarizer()
     context = _build_context(hits, cap=max_context_chars)
     p = (
-        "Using ONLY the Context, answer the Question in 1–2 sentences. "
+        "Using ONLY the Context, answer the Question in 1-2 sentences. "
         "Add inline citation markers like [1], [2] that refer to the source numbers in Context. "
         "If insufficient, say you cannot find it in the slides/pages.\n\n"
         f"Question: {question}\n\nContext:\n{context}"

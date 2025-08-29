@@ -2,7 +2,7 @@
 # SlideHunter — Lecture Navigator MVP (Multi‑Modal RAG)
 
 <p align="center">
-  <img src="images\SlideHunter_LogoV2.png" alt="SlideHunter-App Flow Diagram", width="70%">
+  <img src="images/SlideHunter_Logo.png" alt="SlideHunter-App Flow Diagram", width="70%">
   <br/>
   <em>Ingestion → Retrieval (FAISS + BM25) → Routing/Rerank → Streamlit UI with citations</em>
 </p>
@@ -19,13 +19,22 @@
 - **Auto‑router**: technical ↔ career (short route descriptions, margin threshold).
 - **Type‑aware boosts**: `Page`/`File` ≻ `Assignment`/`Quiz`; **low‑score refusal** to avoid weak citations.
 - **Phase date facts** parsed from module names (e.g., `P2W1 (6/9–6/13)` ⇒ “Phase 2 begins June 9”).
+---
+
+<p align="center">
+  <img src="images/SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="70%">
+  <br/>
+  <em>Ingestion → Retrieval (FAISS + BM25) → Routing/Rerank → Streamlit UI with citations</em>
+</p>
+
+> TBD
 
 ---
 
 ## 🙌 The Team
 
-```bash
-Mina Grullon, Fari Lindo, Thalyann Olivo, Kaifeng Yu, Jahaira Zhagnay
+```
+Mina Grullon, Fari Lindo, Thalyann Olivo, Jahaira Zhagnay
 ```
 
 ---
