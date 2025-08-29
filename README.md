@@ -53,15 +53,25 @@ SLIDEHUNTER/
 │     ├─ canvas.index            # FAISS index (persisted)
 │     └─ facts.json              # parallel facts + metadata
 ├─ images/
-│  └─ image\SlideHunter_App_Flow_Diagram.png 
+│  └─ images\SlideHunter_App_Flow_Diagram.png
+|  └─ images\SlideHunter_Logo.png
 ├─ notebooks/
+|  ├─ canvas_api_extraction.ipynb 
 │  ├─ 01_setup_and_ingest.ipynb  # builds data/faiss/*
 │  ├─ 02_query_demo.ipynb        # quick search & inspect
 │  └─ 03_eval.ipynb              # test prompts & metrics
 ├─ prompts/
 │  └─ answer_from_context.txt
+├─ outputs/
+│  ├─ data_ds_A.csv
+│  └─ eval_prompts.csv
 ├─ requirements.txt
 ├─ .env                          # SLIDEHUNT_BASE=.; (optional keys)
+├─ .gitignore
+├─ flowchart.md
+├─ LICENSE
+├─ nb01_setup_and_ingest.py
+├─ SlideHunter.py
 └─ README.md
 ```
 
