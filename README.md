@@ -57,11 +57,14 @@ SLIDEHUNTER/
 │  ├─ 01_setup_and_ingest.ipynb  # builds data/faiss/*
 │  ├─ 02_query_demo.ipynb        # quick search & inspect
 │  └─ 03_eval.ipynb              # test prompts & metrics
-├─ prompts/
-│  └─ answer_from_context.txt
 ├─ outputs/
 │  ├─ data_ds_A.csv
 │  └─ eval_prompts.csv
+├─ prompts/
+│  └─ answer_from_context.txt
+├─ scripts/
+|  ├─ __init__.py
+│  └─ nb01_helper.py
 ├─ requirements.txt
 ├─ .env                          # SLIDEHUNTER_BASE="Path to/local repo/root folder", etc.
 ├─ .gitignore
