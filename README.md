@@ -2,7 +2,7 @@
 # SlideHunter — Lecture Navigator MVP (Multi‑Modal RAG)
 
 <p align="center">
-  <img src="images/SlideHunter_Logo.png" alt="SlideHunter-App Flow Diagram", width="70%">
+  <img src="assets\images\SlideHunter_Logo.png" alt="SlideHunter-App Flow Diagram", width="70%">
   <br/>
   <em>Ingestion → Retrieval (FAISS + BM25) → Routing/Rerank → Streamlit UI with citations</em>
 </p>
@@ -23,7 +23,7 @@
 ---
 
 <p align="center">
-  <img src="images/SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="70%">
+  <img src="assets\images\SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="70%">
   <br/>
   <em>Find exactly where a concept lives in course slides and notes. Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker), concise GPT-4o-mini summarization with google/flan-t5-base model as fallback </em>
   </p>
