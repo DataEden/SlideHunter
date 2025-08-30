@@ -264,10 +264,15 @@ Run `any notebook` to export to `outputs/eval_prompts.csv`.
 
 ## 🔬 Approach , Evaluation Results, Findings, Setbacks & Resolutions
 
-**Approach:**
+## ✅ Approach (MVP)
 
-- single FAISS store; BM25 hybrid; type‑aware boosts; low‑score refusal; simple router; phase date extractor.
-  
+- **Retriever:** SentenceTransformers (MiniLM-L6-v2) → FAISS (cosine, IndexFlatIP)  
+- **Hybrid boost:** BM25 on titles + leading snippets (blend: 0.7*dense + 0.3*BM25)  
+- **Quality levers:** type-aware boosts (Page/File ≻ Assignment/Quiz), low-score refusal (τ = 0.40)  
+- **Routing:** lightweight domain router (technical ↔ career)  
+- **Dates:** phase date extractor from module names  
+- **Optional:** BGE reranker (top-50) and summarizer (GPT-4o/mini or local FLAN-T5)  
+
 ## 📊 Evaluation Results (taken from 20 technical responses)
 
 Below are the evaluation results from 20 test prompts against the FAISS + BM25 + router retriever.  
