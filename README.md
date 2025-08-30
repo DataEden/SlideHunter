@@ -66,12 +66,12 @@ SLIDEHUNTER/
 |  ├─ __init__.py
 │  └─ nb01_helper.py
 ├─ requirements.txt
-├─ .env                          # SLIDEHUNTER_BASE="Path to/local repo/root folder", etc.
+├─ .env                       # SLIDEHUNTER_BASE="Path to/local repo/root folder", etc.
 ├─ .gitignore
 ├─ flowchart.md
 ├─ LICENSE
-├─ nb01_helper.py                # nb01_setup_and_ingest's helper script
-├─ SlideHunter.py                # Streamlit frontend
+├─ nb01_helper.py             # nb01_setup_and_ingest's helper script
+├─ SlideHunter.py             # Streamlit frontend
 └─ README.md
 ```
 
