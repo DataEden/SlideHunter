@@ -316,7 +316,7 @@ if go and q.strip():
         # summarizer (if enabled + above threshold)
         if gen_summary and out["hits"] and (out["hits"][0]["score"] >= LOW_SCORE_REFUSAL):
             with st.spinner("Summarizing…"):
-                try:
+                try: # gpt not avaialable, fallback to lacal google model
                     if sum_model == "local-fallback" or (sum_model.startswith("gpt-") and not have_openai_key()):
                         ans = summarize_local(q, out["hits"], max_context_chars=max_ctx)
                         st.success(ans); st.caption("Model: local (FLAN-T5)")
