@@ -1,8 +1,8 @@
 
 <p align="center">
-  <img src="assets\images\SlideHunter_Logo.png" alt="SlideHunter App Logo Mockup", width="45%">
+  <img src="assets\images\SlideHunter_LogoV2.png" alt="SlideHunter App Logo Mockup", width="45%">
   <br/>
-  <em>Ingestion → Retrieval (FAISS + BM25) → Routing/Rerank → Streamlit UI with citations</em>
+  <em>Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker) and concise `GPT-4o-mini` summarization and `google/flan-t5-base` local-fallback.</em>
 </p>
 
 > Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker) and concise `GPT-4o-mini` summarization and `google/flan-t5-base` local-fallback.  
