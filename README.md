@@ -44,7 +44,8 @@ Mina Grullon, Fari Lindo, Thalyann Olivo, Jahaira Zhagnay
 SLIDEHUNTER/
 ├─ app/
 │  └─ app.py                     # Streamlit frontend
-
+├─ assets/
+│  └─ images/                    PNGs, etc.
 ├─ data/
 │  ├─ slides/                    # PDFs / source content
 │  ├─ index/                     # (legacy Chroma if you keep it)
