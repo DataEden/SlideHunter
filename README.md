@@ -11,7 +11,7 @@
 
 ## ✨ What it does (MVP)
 
-- Ingests **Canvas Pages** + **PDF slides** → 400–600 char chunks with rich metadata.
+- Ingests **Canvas Pages** + **Image/Text** → 400–600 char chunks with rich metadata.
 - Builds a **single FAISS store** (`data/faiss/canvas.index` + `facts.json`) using `sentence-transformers/all-MiniLM-L6-v2`.
 - **Hybrid retrieval**: FAISS dense vectors + BM25 over titles/snippets; optional **cross‑encoder reranker** for the top‑50.
 - **Auto‑router**: technical ↔ career (short route descriptions, margin threshold).
