@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="assets\images\SlideHunter_Logo.png" alt="SlideHunter App Logo Mockup", width="70%">
+  <img src="assets\images\SlideHunter_Logo.png" alt="SlideHunter App Logo Mockup", width="45%">
   <br/>
   <em>Ingestion → Retrieval (FAISS + BM25) → Routing/Rerank → Streamlit UI with citations</em>
 </p>
