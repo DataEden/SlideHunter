@@ -1,4 +1,5 @@
-<h2 align="center">SlideHunter-App Flow Diagram (Using Mermaid)</h2>
+
+<h2 align="center">SlideHunter-App Flow Diagram <a href="https://mermaid.js.org/">mermaid</a></h2>
 
 <div align="center">
 
@@ -6,10 +7,9 @@
 flowchart TB
   %% Sources
   A["Canvas API<br/>(Pages, Modules, Links)"]
-  B["Slides / PDFs<br/>(data/slides/)"]
 
   %% Ingestion
-  C["Ingestion & Chunking<br/>(PyMuPDF text · 400-600 char chunks · metadata)"]
+  C["Ingestion & Chunking<br/>(Canvas text/items · 400-600 char chunks · metadata)"]
 
   %% Retrieval building blocks
   D["Embeddings<br/>Sentence-Transformers<br/>MiniLM-L6-v2"]
@@ -26,7 +26,6 @@ flowchart TB
 
   %% Edges
   A --> C
-  B --> C
   C --> D
   C --> E
   C --> F
