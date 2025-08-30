@@ -1,8 +1,6 @@
 
-# SlideHunter — Lecture Navigator MVP (Multi‑Modal RAG)
-
 <p align="center">
-  <img src="assets\images\SlideHunter_Logo.png" alt="SlideHunter-App Flow Diagram", width="70%">
+  <img src="assets\images\SlideHunter_Logo.png" alt="SlideHunter App Logo Mockup", width="70%">
   <br/>
   <em>Ingestion → Retrieval (FAISS + BM25) → Routing/Rerank → Streamlit UI with citations</em>
 </p>
@@ -46,6 +44,7 @@ Mina Grullon, Fari Lindo, Thalyann Olivo, Jahaira Zhagnay
 SLIDEHUNTER/
 ├─ app/
 │  └─ app.py                     # Streamlit frontend
+
 ├─ data/
 │  ├─ slides/                    # PDFs / source content
 │  ├─ index/                     # (legacy Chroma if you keep it)
@@ -63,12 +62,12 @@ SLIDEHUNTER/
 │  ├─ data_ds_A.csv
 │  └─ eval_prompts.csv
 ├─ requirements.txt
-├─ .env                          # SLIDEHUNT_BASE=.; (optional keys)
+├─ .env                          # SLIDEHUNTER_BASE="Path to/local repo/root folder", etc.
 ├─ .gitignore
 ├─ flowchart.md
 ├─ LICENSE
-├─ nb01_helper.py
-├─ SlideHunter.py
+├─ nb01_helper.py                # nb01_setup_and_ingest's helper script
+├─ SlideHunter.py                # Streamlit frontend
 └─ README.md
 ```
 

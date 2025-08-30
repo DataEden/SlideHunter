@@ -49,6 +49,13 @@ def chunk_text(text: str, max_chars: int = 600) -> List[str]:
     return [c for c in chunks if c]
 
 def course_domain(course_name: str) -> str:
+    """
+    Return domain key for course_name based on DOMAINS prefixes.
+    Args:
+        course_name: Full course name string
+    Returns:
+        domain key (e.g. "technical", "career", or "other")
+    """
     for dom, names in DOMAINS.items():
         if any(course_name.startswith(n) for n in names):
             return dom
@@ -56,7 +63,12 @@ def course_domain(course_name: str) -> str:
 
 # ---------- Canvas access (wrapped) ----------
 def get_canvas_client() -> "Canvas":
-    """Create a Canvas client from .env (dotenv optional)."""
+    """Create a Canvas client from .env (dotenv optional).
+       Requires CANVAS_BASE_URL and CANVAS_TOKEN in .env or environment.
+    Args:
+        None
+    Returns: 
+        Canvas client"""
     try:
         from dotenv import dotenv_values
         cfg = dotenv_values()
@@ -71,14 +83,25 @@ def get_canvas_client() -> "Canvas":
     return Canvas(base, token)
 
 def select_courses(canvas) -> list:
-    """Return active courses filtered by DOMAINS prefixes."""
+    """Return active courses filtered by DOMAINS prefixes.
+    Args:
+        canvas: Canvas client
+    Returns: List of Course objects
+    """
     wanted_prefixes = sum(DOMAINS.values(), [])
     return [c for c in canvas.get_courses(enrollment_state="active")
             if any(c.name.startswith(p) for p in wanted_prefixes)]
 
 # ---------- Ingest → facts/metas ----------
 def build_facts_and_metas(canvas) -> Tuple[List[str], List[Dict]]:
-    """Traverse selected courses/modules/items and build facts + metas."""
+    """
+    Traverse selected courses/modules/items and build facts + metas.
+    Facts are strings; metas are dicts with context.
+    Args:
+        canvas: Canvas client
+    Returns:
+        (facts, metas)
+    """
     facts, metas = [], []
     all_courses = select_courses(canvas)
 
@@ -209,6 +232,66 @@ def choose_scope(model, router_emb: dict, query: str, margin: float = 0.05):
     if ordered[0][1] - ordered[1][1] < margin:
         return "all", sims
     return ordered[0][0], sims
+
+def search(query: str, model, index, facts, metas, router_emb: dict, k: int = 5, scope: str = "auto", margin: float = 0.05):
+    """
+    Search the FAISS index for relevant facts based on the query and scope.
+
+    Args:
+        query (str): The input query to search for.
+        model: A SentenceTransformers model used to encode the query.
+        index: A FAISS index built over normalized embeddings (IndexFlatIP).
+        facts (List[str]): Fact snippets aligned 1:1 with the index vectors.
+        metas (List[dict]): Metadata aligned 1:1 with `facts`.
+        router_emb (dict): Precomputed route embeddings from `make_router(model)`.
+        k (int): Number of top results to return.
+        scope (str): "technical", "career", "all", or "auto" to choose automatically.
+        margin (float): Router margin; if best−second < margin, use "all".
+
+    Returns:
+        Tuple[str, List[dict]]:
+            (resolved_scope, hits) where each hit is:
+            {"score": float, "fact": str, "meta": dict}
+    """
+    import numpy as np
+
+    # Auto-scope via router if requested
+    if scope == "auto":
+        scope, _ = choose_scope(model, router_emb, query, margin=margin)
+
+    # Encode query (cosine-ready since the index is IP over normalized vectors)
+    q = model.encode([query], normalize_embeddings=True).astype("float32")
+
+    # Overfetch to allow domain filtering, then backfill if needed
+    D, I = index.search(q, k * 8)
+
+    hits, seen = [], set()
+
+    # Pass 1: keep only items in the chosen domain (unless scope == "all")
+    for score, idx in zip(D[0], I[0]):
+        if idx == -1:
+            continue
+        m = metas[idx]
+        if scope != "all" and m.get("domain") != scope:
+            continue
+        if idx in seen:
+            continue
+        seen.add(idx)
+        hits.append({"score": float(score), "fact": facts[idx], "meta": m})
+        if len(hits) >= k:
+            break
+
+    # Pass 2: backfill with any remaining high-score items regardless of domain
+    if len(hits) < k:
+        for score, idx in zip(D[0], I[0]):
+            if idx == -1 or idx in seen:
+                continue
+            seen.add(idx)
+            hits.append({"score": float(score), "fact": facts[idx], "meta": metas[idx]})
+            if len(hits) >= k:
+                break
+
+    return scope, hits
 
 # ---------- CLI/script entrypoint (won't run on import) ----------
 if __name__ == "__main__":

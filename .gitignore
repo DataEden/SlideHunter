@@ -4,7 +4,7 @@
 /data/
 
 # cached files
-/__pycache__/
+__pycache__
 
 # Environmental variables
 .env
@@ -13,4 +13,4 @@
 /images/
 
 # assests folder
-/assests/
+/assets/
