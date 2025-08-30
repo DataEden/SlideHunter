@@ -266,17 +266,33 @@ Run `03_eval.ipynb` to export `outputs/eval_prompts.csv`.
 
 ## 🔬 Findings, Approach, Setbacks & Resolutions
 
-**Approach:** single FAISS store; BM25 hybrid; type‑aware boosts; low‑score refusal; simple router; phase date extractor.
+**Approach:** 
 
-**Findings:** hybrid helps named tokens (e.g., `P2W2`, `pivot tables`); light boosts remove many quiz/assignment mis‑hits; reranker helps edge cases. We tested our retrieval models using questions categorized into 3 different levels of difficulty: easy (3 example questions), medium (5 example questions), and hard (7 example questions). 
+- single FAISS store; BM25 hybrid; type‑aware boosts; low‑score refusal; simple router; phase date extractor.
 
-Our easy questions were used to recall material that is more factual with only one answer which would allow us to test our models retrieval ability for exact answers. For example, when asked "When does phase 2 begin?" the output returned a top score of 0.467 which revelas a relatively strong match with a low latency score of 0.054. Our medium questions involved more conceptual content and required the model to switch gears to work more towards summarizing slide content. We found the medium level questions optimal for testing semantic retrieval since it required giving a more nuanced output. For example, when asked about pivot tables or SQL concepts the output was often not explicit however we observed accuracy (~50%) heading generally in a positive direction with top scores around 0.42. Similarly, the harder questions demanded a more technical response of summarized content from different topics discussed at different times throughout the students' learning period. These queries demonstrated a weak performance returning an average top score of about .30. We also included noisy inputs to test the ability to retrieve information based on informal language and typos. Additionally, we also included out of scope questions such as "Can I see other students' grades??" to test the models ability to truly distinguish between career or technical modules when prompted a question that doesn't necessarily fall into either category.
+**Findings:** 
+
+- hybrid helps named tokens (e.g., `P2W2`, `pivot tables`); light boosts remove many quiz/assignment mis‑hits; reranker helps edge cases. We tested our retrieval models using questions categorized into 3 different levels of difficulty: easy (3 example questions), medium (5 example questions), and hard (7 example questions). 
+
+- Our easy questions were used to recall material that is more factual with only one answer which would allow us to test our models retrieval ability for exact answers. 
+  - For example, when asked "When does phase 2 begin?" the output returned a top score of 0.467 which revelas a relatively strong match with a low latency score of 0.054. 
+  - Our medium questions involved more conceptual content and required the model to switch gears to work more towards summarizing slide content. 
+  - We found the medium level questions optimal for testing semantic retrieval since it required giving a more nuanced output.
+    - For example, when asked about pivot tables or SQL concepts the output was often not explicit however we observed accuracy (~50%) heading generally in a positive direction with top scores around 0.42.
+    - Similarly, the harder questions demanded a more technical response of summarized content from different topics discussed at different times throughout the students' learning period. 
+- These queries demonstrated a weak performance returning an average top score of about .30. We also included noisy inputs to test the ability to retrieve information based on informal language and typos. 
+- Additionally, we also included out of scope questions:
+  - such as "Can I see other students' grades??" to test the models ability to truly distinguish between career or technical modules when prompted a question that doesn't necessarily fall into either category.
 
 In our final evaluation of the model we found the average top score to be 0.407 which demonstrated the model is finding relevant matches since every query returned at least one citation (100% coverage) but it is not a strong.
 
-**Setbacks:** sparse PDFs → PyMuPDF + optional OCR; assignment citations on concept queries → boosts + rerank; routing ambiguity → margin to “all”.
+**Setback(s):** 
 
-**Resolutions/Results:** cleaner top‑1 slide citations; stable latency; reproducible builds via persisted index.
+- We were not able to sufficiently extract text/content from slides/images. 
+
+**Result(s):** 
+
+- We decided to keep this feature as a part of 'future-expansion' and went into the direction of interfacing with Canvas-API to fetch course data for a modern approach/use-case(s) and quick MVP proof of concept. We were able to meet project deadline with a working prototype. 
 
 ---
 
@@ -299,7 +315,7 @@ If deploying from Colab, you can use **cloudflared** to expose a public URL.
 
 ## 🗺️ Future Expansion Roadmap
 
-- OCR fallback for image‑only slides  
+- OCR fallback for image‑only slides
 - Richer date/deadline extractors  
 - Option to split into domain‑specific stores  
 - Instruction‑tuned summarizer for 1–2 sentence answers with citations  
