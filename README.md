@@ -238,7 +238,7 @@ Run `03_eval.ipynb` to export `outputs/eval_prompts.csv`.
 ### Common `ModuleItem.type` values (routing hint)
 
 - `Page` → primary source for **lecture notes / concepts** ✅  
-- `File` (PDF/PPTX) → **slides** ✅  
+- `JSON/XML` (HTML/Text/Items) → **slides/pages/** ✅  
 - `Assignment`, `Quiz`, `Discussion` → links/context; **down-weight** for concept queries  
 - `ExternalUrl`, `ExternalTool` → store link/cite only
 
