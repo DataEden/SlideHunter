@@ -1,11 +1,9 @@
 
 <p align="center">
-  <img src="assets\images\SlideHunter_LogoV2.png" alt="SlideHunter App Logo Mockup", width="45%">
+  <img src="assets\images\SlideHunter_LogoV2.png" alt="SlideHunter App Logo Mockup", width="55%">
   <br/>
   <em>Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker) and concise `GPT-4o-mini` summarization and `google/flan-t5-base` local-fallback.</em>
 </p>
-
-> Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker) and concise `GPT-4o-mini` summarization and `google/flan-t5-base` local-fallback.  
 
 ---
 
@@ -21,7 +19,7 @@
 ---
 
 <p align="center">
-  <img src="assets\images\SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="70%">
+  <img src="assets\images\SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="100%">
   <br/>
   <em>Find exactly where a concept lives in course slides and notes. Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker), concise GPT-4o-mini summarization with google/flan-t5-base model as fallback </em>
   </p>
@@ -117,7 +115,7 @@ CANVAS_BASE_URL=https://<your-subdomain>.instructure.com
 CANVAS_TOKEN=<your_personal_access_token>
 ```
 
-Load with `python-dotenv` in notebooks/apps or rely on Streamlit environment.
+Load with **`python-dotenv`** in notebooks/apps or rely on Streamlit environment.
 
 ---
 
@@ -182,7 +180,7 @@ We track:
 - **Latency** — median; Streamlit shows per‑query  
 - **Refusal Rate** — % of queries correctly refused
 
-Run `03_eval.ipynb` to export `outputs/eval_prompts.csv`.
+Run `any notebook` to export to `outputs/eval_prompts.csv`.
 
 ---
 
@@ -264,35 +262,95 @@ Run `03_eval.ipynb` to export `outputs/eval_prompts.csv`.
 
 ---
 
-## 🔬 Findings, Approach, Setbacks & Resolutions
+## 🔬 Approach , Evaluation Results, Findings, Setbacks & Resolutions
 
-**Approach:** 
+**Approach:**
 
 - single FAISS store; BM25 hybrid; type‑aware boosts; low‑score refusal; simple router; phase date extractor.
+  
+## 📊 Evaluation Results (taken from 20 technical responses)
 
-**Findings:** 
+Below are the evaluation results from 20 test prompts against the FAISS + BM25 + router retriever.  
+Each query was run through the `search()` function with `scope="auto"` (router-enabled).  
 
-- hybrid helps named tokens (e.g., `P2W2`, `pivot tables`); light boosts remove many quiz/assignment mis‑hits; reranker helps edge cases. We tested our retrieval models using questions categorized into 3 different levels of difficulty: easy (3 example questions), medium (5 example questions), and hard (7 example questions). 
+| query                                      | scope      | latency_s | top_score | top_domain | citation (truncated) |
+|--------------------------------------------|------------|-----------|-----------|------------|-----------------------|
+| When does phase 2 begin?                   | all        | 0.041     | 0.476     | technical  | IF '25 Data Science Cohort A > P2W12 ... |
+| Any way of saying June 9th?                | technical  | 0.026     | 0.230     | technical  | Foundations Course > Week 1: Foundations ... |
+| Where can I find my instructor's email?    | technical  | 0.022     | 0.332     | technical  | IF '25 Data Science Cohort A > Fellow Res... |
+| Under Course Team Contact Information?     | all        | 0.037     | 0.444     | technical  | IF '25 Data Science Cohort A > Fellow Res... |
+| What was the last TLAB about?              | technical  | 0.023     | 0.334     | technical  | IF '25 Data Science Cohort A > P2W9 ...     |
+| An explanation of making a recommender.    | technical  | 0.014     | 0.465     | technical  | IF '25 Data Science Cohort A > P2W9 ...     |
+| What lecture slides cover pivot tables?    | technical  | 0.033     | 0.563     | technical  | IF '25 Data Science Cohort A > P1W6 ...     |
+| What lecture slides explain control flow?  | technical  | 0.020     | 0.389     | technical  | Foundations Course > Week 1: Foundations ... |
+| Bullet point list of SQL concepts?         | technical  | 0.018     | 0.577     | technical  | IF '25 Data Science Cohort A > P1W9 ...     |
+| When does phase 2 commence?                | all        | 0.031     | 0.361     | technical  | IF '25 Data Science Cohort A > P2W1 ...     |
+| Summary of P2W2’s material?                | all        | 0.016     | 0.518     | technical  | IF '25 Data Science Cohort A > P2W2 ...     |
+| Where did we define precision vs. recall?  | technical  | 0.027     | 0.382     | technical  | IF '25 Data Science Cohort A > P2W3 ...     |
 
-- Our easy questions were used to recall material that is more factual with only one answer which would allow us to test our models retrieval ability for exact answers. 
-  - For example, when asked "When does phase 2 begin?" the output returned a top score of 0.467 which revelas a relatively strong match with a low latency score of 0.054. 
-  - Our medium questions involved more conceptual content and required the model to switch gears to work more towards summarizing slide content. 
+---
+
+### 📝 Initial Observations
+
+- **Coverage:** 100% (all 20 questions returned at least one hit).  
+- **Latency:** Fast, consistently between `0.01–0.04s` per query.  
+- **Top scores:** Range `0.23–0.58`.  
+  - ~70% of queries scored **≥ 0.38** (above the refusal threshold of 0.40).  
+  - A few (e.g., *“Any way of saying June 9th?”*, *XGBoost vs AdaBoost*) were borderline at ~0.23–0.29, indicating weaker matches which makes sense, since the XGBoost model wasn't a covered topic.  
+- **Domains:** All results classified as **technical**. No “career” prompts were included in this round — router evaluation pending.  
+- **Insights:** Retrieval is strong for structured concepts (e.g., SQL, PCA, regression), weaker for ambiguous/natural phrasing (“June 9th” question).  
+
+---
+
+## **Key Observations**
+
+- **Hybrid helps names & codes:** BM25 boosts matches for P2W2, “pivot tables”, “ROC”, “log loss”  
+- **Type boosts reduce noise:** Concept questions more reliably hit Page/File over Assignment/Quiz  
+- **Reranker = precision mode:** Improves ordering when candidates are close; toggle off to keep latency minimal  
+- **Guardrailed summarizer:** Only runs when top hit ≥ τ; otherwise refuse + show snippets to avoid hallucinations  
+- **Ambiguity hurts dense scores:** Colloquial queries benefit from BM25 blending & mild rewrites  
+
+---
+
+**Detailed Findings:**
+
+- hybrid helps named tokens (e.g., `P2W2`, `pivot tables`); light boosts remove many quiz/assignment mis‑hits; reranker helps edge cases. We tested our retrieval models using questions categorized into 3 different levels of difficulty: easy (3 example questions), medium (5 example questions), and hard (7 example questions).
+
+- Our easy questions were used to recall material that is more factual with only one answer which would allow us to test our models retrieval ability for exact answers.
+  - For example, when asked "When does phase 2 begin?" the output returned a top score of 0.467 which revelas a relatively strong match with a low latency score of 0.054.
+  - Our medium questions involved more conceptual content and required the model to switch gears to work more towards summarizing slide content.
   - We found the medium level questions optimal for testing semantic retrieval since it required giving a more nuanced output.
     - For example, when asked about pivot tables or SQL concepts the output was often not explicit however we observed accuracy (~50%) heading generally in a positive direction with top scores around 0.42.
-    - Similarly, the harder questions demanded a more technical response of summarized content from different topics discussed at different times throughout the students' learning period. 
-- These queries demonstrated a weak performance returning an average top score of about .30. We also included noisy inputs to test the ability to retrieve information based on informal language and typos. 
+    - Similarly, the harder questions demanded a more technical response of summarized content from different topics discussed at different times throughout the students' learning period.
+- These queries demonstrated a weak performance returning an average top score of about .30. We also included noisy inputs to test the ability to retrieve information based on informal language and typos.
 - Additionally, we also included out of scope questions:
   - such as "Can I see other students' grades??" to test the models ability to truly distinguish between career or technical modules when prompted a question that doesn't necessarily fall into either category.
 
 In our final evaluation of the model we found the average top score to be 0.407 which demonstrated the model is finding relevant matches since every query returned at least one citation (100% coverage) but it is not a strong.
 
-**Setback(s):** 
+---
 
-- We were not able to sufficiently extract text/content from slides/images. 
+## 🧭 Process Notes
 
-**Result(s):** 
+- Collaboration & learning: Colab for GPUs, shared iteration  
+- Productization: VS Code + Streamlit + clean repo structure  
+- Reproducibility: FAISS store in `data/faiss/` shared by notebooks & app  
+  
+---
 
-- We decided to keep this feature as a part of 'future-expansion' and went into the direction of interfacing with Canvas-API to fetch course data for a modern approach/use-case(s) and quick MVP proof of concept. We were able to meet project deadline with a working prototype. 
+## ⚠️ Limitations (MVP)
+
+- No OCR → image-only slides are skipped  
+- Single embedding model (MiniLM-L6-v2); no multilingual / long-context  
+- Router is simple; no multi-index routing yet  
+
+---
+
+🔮 **Next steps:**  
+
+- Add **10–15 career-focused prompts** (resume, LinkedIn, cover letters, interview prep) to test router accuracy.  
+- Increase total evaluation set to ~30–40 queries for better coverage.  
+- Inspect **borderline low-score cases** to refine refusal threshold or add reranker tuning.  
 
 ---
 
@@ -301,6 +359,16 @@ In our final evaluation of the model we found the average top score to be 0.407 
 - **Scope:** auto/technical/career/all  
 - Toggles: **BM25 hybrid**, **reranker**, **low‑score refusal**  
 - Special handling: **Phase 2 begin date**
+
+## 🔁 Reproduce (quick)
+
+1. Run ingest → build `data/faiss/{canvas.index,facts.json}`  
+2. Run query demo → verify retrieval & citations  
+3. Launch Streamlit:  
+
+```bash
+streamlit run app/SlideHunter.py or SlindHunter.py
+```
 
 If deploying from Colab, you can use **cloudflared** to expose a public URL.
 
