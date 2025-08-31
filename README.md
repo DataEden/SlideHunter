@@ -19,7 +19,7 @@
 ---
 
 <p align="center">
-  <img src="assets\images\SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="100%">
+  <img src="assets\images\SlideHunter_App_Flow_Diagram.png" alt="SlideHunter-App Flow Diagram", width="80%">
   <br/>
   <em>Find exactly where a concept lives in course slides and notes. Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker), concise GPT-4o-mini summarization with google/flan-t5-base model as fallback </em>
   </p>
@@ -88,15 +88,15 @@ pip install -r requirements.txt
 2) **Put slides** in `data/slides/` (or run Canvas ingestion below).
 
 3) **Build the index** (Notebook `01_setup_and_ingest.ipynb`) → writes:
+
 ```
 data/faiss/canvas.index
 data/faiss/facts.json
 ```
 
 4) **Run Streamlit**
-```bash
-streamlit run app/app.py
-```
+- If in root: ```streamlit run SlideHunter```
+- if in apps folder: ```streamlit run app/SlideHunter.py```
 
 > **Windows note:** If `pip install faiss-cpu` fails, use Conda (`conda install -c pytorch faiss-cpu`) or run the notebooks; keep Chroma as a temporary fallback if needed.
 
@@ -107,12 +107,12 @@ streamlit run app/app.py
 Create **`.env`** in repo root:
 
 ```dotenv
-SLIDEHUNT_BASE=.
-# Optional (only if you add generation)
-# OPENAI_API_KEY=sk-...
-# Canvas access (for ingestion script/notebook)
-CANVAS_BASE_URL=https://<your-subdomain>.instructure.com
-CANVAS_TOKEN=<your_personal_access_token>
+SLIDEHUNTER_BASE=.
+Optional (since there's a fallback)
+ OPENAI_API_KEY=sk-...
+Canvas access (for ingestion script/notebook)
+ CANVAS_BASE_URL=https://<your-subdomain>.instructure.com
+ CANVAS_TOKEN=<your_personal_access_token>
 ```
 
 Load with **`python-dotenv`** in notebooks/apps or rely on Streamlit environment.
@@ -251,17 +251,6 @@ Run `any notebook` to export to `outputs/eval_prompts.csv`.
 
 ---
 
-## 🤝 Team Collaboration
-
-**Roles (template):** PM & UX · ETL & chunking · Retrieval & scoring · Reranker & QA · DevOps & CI
-
-**Working agreement:**
-- `main` protected; feature branches → PRs (small, focused).
-- Don’t commit slides or `.env`.
-- Issues labeled by area: `etl`, `retrieval`, `frontend`, `eval`, `infra`.
-
----
-
 ## 🔬 Approach , Evaluation Results, Findings, Setbacks & Resolutions
 
 ## ✅ Approach (MVP)
@@ -393,6 +382,21 @@ If deploying from Colab, you can use **cloudflared** to expose a public URL.
 - Option to split into domain‑specific stores  
 - Instruction‑tuned summarizer for 1–2 sentence answers with citations  
 - FastAPI search service (two‑service architecture)
+
+---
+
+## 🤝 Team Collaboration
+
+**Roles (template):** PM & UX · ETL & chunking · Retrieval & scoring · Reranker & QA · DevOps & CI
+
+**Working agreement:**
+
+- `main` deliberate communicate changes.
+- Don’t commit slides or `.env`.
+- Communicate prior to each commit/push via Slack group, etc.
+- Communicate changes in order to prevent modifying identical content.
+- Fari (@DataEden) – Lead Developer  
+- ChatGPT (OpenAI) – AI Pair Programmer / Vibe Coding Partner.
 
 ---
 
