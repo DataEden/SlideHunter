@@ -4,11 +4,11 @@ Safe to import in notebooks; does not execute side-effect code at import.
 """
 
 from pathlib import Path
-import os, re, json
-from typing import List, Dict, Tuple, Iterable
-
-# --- Light imports at top; heavy ones inside functions to speed up import time
+import os, re, json, numpy
+from typing import List, Dict, Tuple 
+from canvasapi import Canvas
 from bs4 import BeautifulSoup
+
 
 # ---------- Config & small utilities ----------
 DOMAINS = {
@@ -75,7 +75,7 @@ def get_canvas_client() -> "Canvas":
     except Exception:
         cfg = os.environ
 
-    from canvasapi import Canvas
+    #from canvasapi import Canvas
     base = cfg.get("CANVAS_BASE_URL")
     token = cfg.get("CANVAS_TOKEN")
     if not base or not token:
@@ -188,7 +188,7 @@ def resolve_store_base() -> Path:
         return Path(base_env).expanduser().resolve()
     return Path.cwd()
 
-def store_paths(base: Path = None):
+def store_paths(base: Path = Path) -> Tuple[Path, Path, Path]:
     base = base or resolve_store_base()
     store_dir = base / "data" / "faiss"
     index_path = store_dir / "canvas.index"
@@ -246,7 +246,7 @@ def search(query: str, model, index, facts, metas, router_emb: dict, k: int = 5,
         router_emb (dict): Precomputed route embeddings from `make_router(model)`.
         k (int): Number of top results to return.
         scope (str): "technical", "career", "all", or "auto" to choose automatically.
-        margin (float): Router margin; if best−second < margin, use "all".
+        margin (float): Router margin; if best-second < margin, use "all".
 
     Returns:
         Tuple[str, List[dict]]:
