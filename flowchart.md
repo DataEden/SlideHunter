@@ -1,5 +1,5 @@
 
-<h2 align="center">SlideHunter-App Flow Diagram <a href="https://mermaid.js.org/">mermaid</a></h2>
+<h2 align="center">SlideHunter-App Flow Diagram Using <a href="https://mermaid.js.org/">Mermaid</a></h2>
 
 <div align="center">
 
