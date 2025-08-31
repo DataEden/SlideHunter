@@ -95,8 +95,8 @@ data/faiss/facts.json
 ```
 
 4) **Run Streamlit**
-- If in root: ```streamlit run SlideHunter```
-- if in apps folder: ```streamlit run app/SlideHunter.py```
+- If in root: `streamlit run SlideHunter`
+- if in apps folder: `streamlit run app/SlideHunter.py`
 
 > **Windows note:** If `pip install faiss-cpu` fails, use Conda (`conda install -c pytorch faiss-cpu`) or run the notebooks; keep Chroma as a temporary fallback if needed.
 
@@ -113,9 +113,8 @@ Optional (since there's a fallback)
 Canvas access (for ingestion script/notebook)
  CANVAS_BASE_URL=https://<your-subdomain>.instructure.com
  CANVAS_TOKEN=<your_personal_access_token>
-```
-
 Load with **`python-dotenv`** in notebooks/apps or rely on Streamlit environment.
+```
 
 ---
 
@@ -131,14 +130,20 @@ pip install canvasapi beautifulsoup4
 ```
 
 ```python
-import os, re
-from canvasapi import Canvas
 from bs4 import BeautifulSoup
+from sentence_transformers import SentenceTransformer
+import numpy as np, faiss, re, json, os
+from canvasapi import Canvas
+import torch
 
-BASE_URL = os.getenv("CANVAS_BASE_URL")
-TOKEN    = os.getenv("CANVAS_TOKEN")
-canvas   = Canvas(BASE_URL, TOKEN)
+CANVAS_BASE_URL = os.getenv("CANVAS_BASE_URL")
+CANVAS_TOKEN = os.getenv("CANVAS_TOKEN")
+canvas = Canvas(CANVAS_BASE_URL, CANVAS_TOKEN)
+
+OPENAI_API_KEY = config.get("OPENAI_API_KEY")
 ```
+
+Load with `python-dotenv` in notebooks/apps or rely on Streamlit environment.
 
 ---
 
