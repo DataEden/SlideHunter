@@ -52,9 +52,9 @@ SLIDEHUNT/                       # Root of local-repo
 │     └─ facts.json              # parallel facts + metadata
 ├─ notebooks/
 |  ├─ canvas_api_extraction.ipynb 
-│  ├─ 01_setup_and_ingest.ipynb  # builds data/faiss/*
-│  ├─ 02_query_demo.ipynb        # quick search & inspect
-│  └─ 03_eval.ipynb              # test prompts & metrics
+│  ├─ 01_setup_and_ingest.ipynb   # builds data/faiss/*
+│  ├─ 02_query_demo.ipynb         # small/Initial test prompts 
+│  └─ 03_eval.ipynb               # Evaluate & inspect outputs
 ├─ outputs/
 │  ├─ data_ds_A.csv
 │  └─ eval_prompts.csv
