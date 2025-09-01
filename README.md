@@ -39,11 +39,11 @@ Mina Grullon, Fari Lindo, Thalyann Olivo, Jahaira Zhagnay
 ## 🗂️ Repo Structure
 
 ```
-SLIDEHUNTER/
+SLIDEHUNT/                       # Root of local-repo
 ├─ app/
 │  └─ app.py                     # Streamlit frontend
 ├─ assets/
-│  └─ images/                    PNGs, etc.
+│  └─ images/                    # PNGs, etc.
 ├─ data/
 │  ├─ slides/                    # PDFs / source content
 │  ├─ index/                     # (legacy Chroma if you keep it)
@@ -78,6 +78,7 @@ SLIDEHUNTER/
 ## 🚀 Quickstart (Local)
 
 1) **Create venv & install**
+  
 ```bash
 python -m venv .venv
 # Windows: .\.venv\Scripts\Activate.ps1
@@ -85,16 +86,17 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-2) **Put slides** in `data/slides/` (or run Canvas ingestion below).
+1) **Put slides** in `data/slides/` (or run Canvas ingestion below).
 
-3) **Build the index** (Notebook `01_setup_and_ingest.ipynb`) → writes:
+2) **Build the index** (Notebook `01_setup_and_ingest.ipynb`) → writes:
 
-```
+```python
 data/faiss/canvas.index
 data/faiss/facts.json
 ```
 
-4) **Run Streamlit**
+3) **Run Streamlit**
+
 - If in root: `streamlit run SlideHunter`
 - if in apps folder: `streamlit run app/SlideHunter.py`
 
@@ -113,7 +115,7 @@ Optional (since there's a fallback)
 Canvas access (for ingestion script/notebook)
  CANVAS_BASE_URL=https://<your-subdomain>.instructure.com
  CANVAS_TOKEN=<your_personal_access_token>
-Load with **`python-dotenv`** in notebooks/apps or rely on Streamlit environment.
+Load with `**python-dotenv** in notebooks/apps or rely on Streamlit environment.`
 ```
 
 ---
@@ -125,9 +127,8 @@ Load with **`python-dotenv`** in notebooks/apps or rely on Streamlit environment
 - Copy the token; store it in `.env` as `CANVAS_TOKEN`.
 
 ### Install and connect
-```bash
-pip install canvasapi beautifulsoup4
-```
+
+If needed install 'pip install -r requirements.txt' to install all dependencies/packages.
 
 ```python
 from bs4 import BeautifulSoup
@@ -149,9 +150,7 @@ Load with `python-dotenv` in notebooks/apps or rely on Streamlit environment.
 
 ## 🧠 Build Embeddings & FAISS Store
 
-```bash
-pip install sentence-transformers faiss-cpu rank-bm25
-```
+If needed run command 'pip install -r requirements.txt'
 
 ```python
 from sentence_transformers import SentenceTransformer
@@ -394,7 +393,7 @@ If deploying from Colab, you can use **cloudflared** to expose a public URL.
 
 **Roles (template):** PM & UX · ETL & chunking · Retrieval & scoring · Reranker & QA · DevOps & CI
 
-**Working agreement:**
+**Working agreement:**pip install -r requirements.txt
 
 - `main` deliberate communicate changes.
 - Don’t commit slides or `.env`.
@@ -407,4 +406,4 @@ If deploying from Colab, you can use **cloudflared** to expose a public URL.
 
 ## 📜 License
 
-!MIT [(see `LICENSE`)](\LICENSE)
+!MIT [see `LICENSE`](\LICENSE)
