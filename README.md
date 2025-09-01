@@ -2,7 +2,7 @@
 <p align="center">
   <img src="assets\images\SlideHunter_LogoV2.png" alt="SlideHunter App Logo Mockup", width="55%">
   <br/>
-  <em>Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker) and concise `GPT-4o-mini` summarization and `google/flan-t5-base` local-fallback.</em>
+  <em>Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker) and concise GPT-4o-mini summarization and google/flan-t5-base local-fallback.</em>
 </p>
 
 ---
@@ -89,8 +89,9 @@ pip install -r requirements.txt
 1) **Put slides** in `data/slides/` (or run Canvas ingestion below).
 
 2) **Build the index** (Notebook `01_setup_and_ingest.ipynb`) → writes:
+  
 
-```python
+```
 data/faiss/canvas.index
 data/faiss/facts.json
 ```
