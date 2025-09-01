@@ -24,14 +24,21 @@
   <em>Find exactly where a concept lives in course slides and notes. Lightning-fast answers with pinpoint slide/page citations, powered by modern ML retrieval (FAISS + BM25 + reranker), concise GPT-4o-mini summarization with google/flan-t5-base model as fallback </em>
   </p>
 
+## ⚙️ Flow Overview
+
+- The SlideHunter app connects directly to the Canvas API to ingest course content (pages, modules, links). Text is chunked into manageable pieces (≈400–600 characters) with rich metadata, then indexed in two ways:
+  - Dense embeddings (MiniLM-L6-v2 → FAISS vector store) for semantic search
+  - Sparse BM25 over titles/snippets for keyword relevance
+- A lightweight router steers queries between technical and career domains:
+  - while optional components like a BGE reranker refine top-50 hits and a low-score refusal guardrail filters out weak matches.
+  - Results flow into the Streamlit UI, which surfaces top-k hits (we've decided on k=4 for now.), citations, and optional summarization.
+
 ---
 
 ## 🙌 The Team
 
 ```
-
 Mina Grullon, Fari Lindo, Thalyann Olivo, Jahaira Zhagnay
-
 ```
 
 ---
