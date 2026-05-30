@@ -7,6 +7,20 @@
 
 ---
 
+## README Render Safety Test
+
+This is a harmless iframe render test.
+
+<iframe
+  title="DID iframe safety test"
+  srcdoc="<p style='font-family: sans-serif;'>IFRAME TEST RENDERED</p>"
+  width="100%"
+  height="120"
+  style="border: 2px solid #2563eb; border-radius: 8px;"
+></iframe>
+
+---
+
 ## ✨ What it does (MVP)
 
 - Ingests **Canvas Pages** + **Image/Text** → 400–600 char chunks with rich metadata.
